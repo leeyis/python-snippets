@@ -6,7 +6,7 @@ import os
 
 def excel_decrypt(src_file: str, password: str, del_src: bool = False)->bool:
     """
-    Excel解密
+    Excel自动解密
     :param src_file:待解密Excel文件路径
     :param password:密码,多个密码用英文逗号隔开
     :param del_src:是否删除原始加密文件
