@@ -18,12 +18,13 @@ def excel_decrypt(src_file: str, password: str, del_src: bool = False)->bool:
         for pwd in passwords:
             try:
                 xlapp = Dispatch("Excel.Application")
-                xlapp.Workbooks.Open(src_file, False, True, None, pwd)
+                wb = xlapp.Workbooks.Open(src_file, False, True, None, pwd)
                 file_name = src_file.split("\\")[-1]
                 file_location = src_file[0:(len(src_file) - len(file_name))]
-                wb = xlapp.Workbooks[0]
-                wb.Password = ""
-                xlapp.ActiveWorkbook.SaveAs(os.path.join(file_location, ("(decrypted)" + file_name)))
+                save_path = os.path.join(file_location, ("(decrypted)" + file_name))
+                xlapp.DisplayAlerts = False
+                xlapp.ActiveWorkbook.SaveAs(save_path, None, "", "")
+                wb.Close()
                 xlapp.Quit()
                 flag = True
                 print("decrypt success![%s]" % pwd)
@@ -32,19 +33,20 @@ def excel_decrypt(src_file: str, password: str, del_src: bool = False)->bool:
                         os.remove(src_file)
                         print("origin file delete success![%s]" % src_file)
                     except Exception as e:
-                        print("origin file delete failed![%s]" % src_file)
+                        print("origin file delete failed![%s]" % src_file, repr(e))
                 break
             except Exception as e:
-                print("wrong password![%s]" % pwd)
+                print("wrong password![%s]" % pwd, repr(e))
     else:
         try:
             xlapp = Dispatch("Excel.Application")
-            xlapp.Workbooks.Open(src_file, False, True, None, password)
+            wb = xlapp.Workbooks.Open(src_file, False, True, None, password)
             file_name = src_file.split("\\")[-1]
-            file_location = src_file[0:(len(src_file)-len(file_name))]
-            wb = xlapp.Workbooks[0]
-            wb.Password = ""
-            xlapp.ActiveWorkbook.SaveAs(os.path.join(file_location, ("(decrypted)"+file_name)))
+            file_location = src_file[0:(len(src_file) - len(file_name))]
+            save_path = os.path.join(file_location, ("(decrypted)" + file_name))
+            xlapp.DisplayAlerts = False
+            xlapp.ActiveWorkbook.SaveAs(save_path, None, "", "")
+            wb.Close()
             xlapp.Quit()
             flag = True
             print("decrypt success![%s]" % password)
@@ -53,12 +55,12 @@ def excel_decrypt(src_file: str, password: str, del_src: bool = False)->bool:
                     os.remove(src_file)
                     print("origin file delete success![%s]" % src_file)
                 except Exception as e:
-                    print("origin file delete failed![%s]" % src_file)
+                    print("origin file delete failed![%s]" % src_file, repr(e))
         except Exception as e:
-            print("wrong password![%s]" % password)
+            print("wrong password![%s]" % password, repr(e))
     return flag
 
 
 if __name__ == "__main__":
     print(excel_decrypt(r"C:\Users\eason\Desktop\test\decrypt\t1.xls", password="111111,123456,121212", del_src=True))
-    print(excel_decrypt(r"C:\Users\eason\Desktop\test\decrypt\t2.xlsx", password="111111,123456,121212", del_src=False))
+    print(excel_decrypt(r"C:\Users\eason\Desktop\test\decrypt\t2.xlsx", password="111111,123456,121212", del_src=True))
