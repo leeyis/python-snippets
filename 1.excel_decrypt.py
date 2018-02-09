@@ -1,3 +1,4 @@
+#!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
 __author__ = "eason"
 from win32com.client import Dispatch
