@@ -63,5 +63,5 @@ def excel_decrypt(src_file: str, password: str, del_src: bool = False)->bool:
 
 
 if __name__ == "__main__":
-    print(excel_decrypt(r"C:\Users\eason\Desktop\test\decrypt\t1.xls", password="111111,123456,121212", del_src=True))
-    print(excel_decrypt(r"C:\Users\eason\Desktop\test\decrypt\t2.xlsx", password="111111,123456,121212", del_src=True))
+    print(excel_decrypt(r"C:\Users\eason\Desktop\test\decrypt\t1.xls", password="111111,123456,121212,12345678", del_src=True))
+    print(excel_decrypt(r"C:\Users\eason\Desktop\test\decrypt\t2.xlsx", password="111111,123456,121212,12345678", del_src=True))
